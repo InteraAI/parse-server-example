@@ -8,6 +8,7 @@ export const config = {
   liveQuery: {
     classNames: ['Posts', 'Comments'], // List of classes to support for query subscriptions
   },
+  masterKeyIps: [process.env.MASTER_KEY_IP],
   schema: {
     definitions: schemaDefinitions,
     lockSchemas: true,

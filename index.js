@@ -3,6 +3,7 @@
 
 import express from 'express';
 import { ParseServer } from 'parse-server';
+import ParseDashboard from 'parse-dashboard';
 import path from 'path';
 import http from 'http';
 import { config } from './config.js';
@@ -17,6 +18,28 @@ const mountPath = process.env.PARSE_MOUNT || '/parse';
 const server = new ParseServer(config);
 await server.start();
 app.use(mountPath, server.app);
+
+const options = { allowInsecureHTTP: true };
+const dashboard = new ParseDashboard({
+  "apps": [
+    {
+      "serverURL": config.serverURL,
+      "appId": config.appId,
+      "masterKey": config.masterKey,
+      "appName": "Parse",
+      "enableSecurityChecks": true
+    }
+  ],
+  "users": [
+    {
+      "user": process.env.DASHBOARD_USER,
+      "pass": process.env.DASHBOARD_PASS,
+      "mfa": process.env.DASHBOARD_MFA,
+      "mfaPeriod": parseInt(process.env.DASHBOARD_MFA_PERIOD),
+    }
+  ]
+}, options);
+app.use('/dashboard', dashboard);
 
 // Parse Server plays nicely with the rest of your web routes
 app.get('/', function (req, res) {
