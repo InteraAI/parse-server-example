@@ -1,4 +1,4 @@
-import { schemaDefinitions } from "./cloud/schema.js";
+// import { schemaDefinitions } from "./cloud/schema.js";
 export const config = {
   databaseURI: process.env.DATABASE_URI || process.env.MONGODB_URI || 'mongodb://localhost:27017/dev',
   cloud: process.env.CLOUD_CODE_MAIN || './cloud/main.js',
@@ -9,11 +9,11 @@ export const config = {
     classNames: ['Posts', 'Comments'], // List of classes to support for query subscriptions
   },
   masterKeyIps: [process.env.MASTER_KEY_IP],
-  schema: {
-    definitions: schemaDefinitions,
-    lockSchemas: true,
-    strict: true,
-    recreateModifiedFields: false,
-    deleteExtraFields: false,
-  },
+  // schema: {
+  //   definitions: schemaDefinitions,
+  //   lockSchemas: true,
+  //   strict: true,
+  //   recreateModifiedFields: false,
+  //   deleteExtraFields: false,
+  // },
 };
